@@ -7,22 +7,18 @@ namespace ConsoleApp4
         static void Main(string[] args)
         {
             /* TASK 1
-            Console.WriteLine("Введіть 3 любих числа: ");
-            int a = Convert.ToInt32(Console.ReadLine());
-            int b = Convert.ToInt32(Console.ReadLine());
-            int c = Convert.ToInt32(Console.ReadLine());
+            int[] numbers = new int[3];
+            for (int i = 0; i < numbers.Length; i++)
+            {
+                numbers[i] = Convert.ToInt32(Console.ReadLine());
+            }
 
-            if (a > 1 && a < 19)
+            foreach (int number in numbers)
             {
-                Console.WriteLine($"{a} Відноситься до інтервалу від [1, 19]");
-            }
-            if (b > 1 && b < 19)
-            {
-                Console.WriteLine($"{b} Відноситься до інтервалу від [1, 19]");
-            }
-            if (c > 1 && c < 19)
-            {
-                Console.WriteLine($"{c} Відноситься до інтервалу від [1, 19]");
+                if (number > 1 && number < 19)
+                {
+                    Console.WriteLine($"{number} Відноситься до інтервалу від [1, 19]");
+                }
             }
             */
 
