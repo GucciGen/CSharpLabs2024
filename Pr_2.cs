@@ -58,58 +58,20 @@ namespace ConsoleApp4
 
             int min = array[0];
             int max = array[0];
-            for (int i = 1; i < ArraySize; i++)
+            foreach (int num in array)
             {
-                if (array[i] < min)
+                if (num < min)
                 {
-                    min = array[i];
+                    min = num;
                 }
-                if (array[i] > max)
+                if (num > max)
                 {
-                    max = array[i];
+                    max = num;
                 }
             }
 
             Console.WriteLine($"Мінімум: {min}");
             Console.WriteLine($"Максимум: {max}");
-            */
-
-            /* TASK 4
-            int ArraySize = 19;
-            int[] X = new int[ArraySize];
-            Random rand = new Random();
-
-            for (int i = 0; i < ArraySize; i++)
-            {
-                X[i] = rand.Next(-10, 11);
-            }
-            int M = 5;
-            Console.WriteLine($"Чсло M: {M}");
-            Console.WriteLine($"Заданий масив X: ");
-            foreach (var num in X)
-            {
-                Console.Write(num + " ");
-            }
-            Console.WriteLine();
-
-            int[] Y = new int[X.Length];
-            int YIndex = 0;
-
-            foreach (var num in X)
-            {
-                if (Math.Abs(num) > M)
-                {
-                    Y[YIndex] = num;
-                    YIndex++;
-                }
-            }
-            
-            Console.WriteLine($"Оптимальний масив Y: ");
-            foreach (var num in Y)
-            {
-                Console.Write(num + " ");
-            }
-            Console.WriteLine();
             */
         }
     }
