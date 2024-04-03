@@ -7,13 +7,15 @@ namespace ConsoleApp4
         static void Main(string[] args)
         {
             /* TASK 1
-            int[] numbers = new int[3];
-            for (int i = 0; i < numbers.Length; i++)
-            {
-                numbers[i] = Convert.ToInt32(Console.ReadLine());
-            }
+            int a = Convert.ToInt32(Console.ReadLine());
+            int b = Convert.ToInt32(Console.ReadLine());
+            int c = Convert.ToInt32(Console.ReadLine());
 
-            foreach (int number in numbers)
+            numbers(a);
+            numbers(b);
+            numbers(c);
+
+            static void numbers(int number)
             {
                 if (number > 1 && number < 19)
                 {
