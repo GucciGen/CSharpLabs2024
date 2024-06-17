@@ -1,0 +1,103 @@
+using System;
+
+public class Book
+{
+    private Title title;
+    private Author author;
+    private Content content;
+
+    public Book(string title)
+    {
+        this.title = new Title(title);
+    }
+
+    public Author Author
+    {
+        get { return author; }
+        set { author = value; }
+    }
+
+    public Content Content
+    {
+        get { return content; }
+        set { content = value; }
+    }
+
+    public void Show()
+    {
+        title.Show();
+        author.Show();
+        content.Show();
+    }
+}
+
+public class Title
+{
+    private string text;
+
+    public Title(string text)
+    {
+        this.text = text;
+    }
+
+    public void Show()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine($"Title: {text}");
+        Console.ResetColor();
+    }
+}
+
+public class Author
+{
+    private string name;
+
+    public Author(string name)
+    {
+        this.name = name;
+    }
+
+    public void Show()
+    {
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine($"Author: {name}");
+        Console.ResetColor();
+    }
+}
+
+public class Content
+{
+    private string text;
+
+    public Content(string text)
+    {
+        this.text = text;
+    }
+
+    public void Show()
+    {
+        Console.ForegroundColor = ConsoleColor.Cyan;
+        Console.WriteLine($"Content: {text}");
+        Console.ResetColor();
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Console.Write("Enter book title: ");
+        string bookTitle = Console.ReadLine();
+        Book book = new Book(bookTitle);
+
+        Console.Write("Enter author name: ");
+        string authorName = Console.ReadLine();
+        book.Author = new Author(authorName);
+
+        Console.Write("Enter content: ");
+        string contentText = Console.ReadLine();
+        book.Content = new Content(contentText);
+
+        book.Show();
+    }
+}
