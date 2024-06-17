@@ -1,0 +1,170 @@
+using System;
+using System.Collections.Generic;
+using System.Threading;
+
+interface ISpell
+{
+    string Name { get; }
+    int Power { get; }
+
+    void Cast(Mage caster, Mage target);
+}
+
+abstract class Mage
+{
+    public string Name { get; private set; }
+    public int MagicLevel { get; private set; }
+    public int Health { get; protected set; }
+    protected List<ISpell> Spells;
+
+    public event Action<string> OnAttack;
+    public event Action<string> OnDefend;
+    public event Action<string> OnDeath;
+
+    protected Mage(string name, int magicLevel)
+    {
+        Name = name;
+        MagicLevel = magicLevel;
+        Health = 100;
+        Spells = new List<ISpell>();
+    }
+
+    public abstract void Attack(Mage target);
+    public abstract void Defend(int damage);
+
+    protected void RaiseOnAttack(string message)
+    {
+        OnAttack?.Invoke(message);
+    }
+
+    protected void RaiseOnDefend(string message)
+    {
+        OnDefend?.Invoke(message);
+    }
+
+    protected void RaiseOnDeath(string message)
+    {
+        OnDeath?.Invoke(message);
+    }
+
+    public bool IsAlive()
+    {
+        return Health > 0;
+    }
+}
+
+class FireMage : Mage
+{
+    public FireMage(string name, int magicLevel) : base(name, magicLevel)
+    {
+        Spells.Add(new FireballSpell());
+    }
+
+    public override void Attack(Mage target)
+    {
+        RaiseOnAttack($"{Name} атакує {target.Name} використовуючи {Spells[0].Name}");
+        Spells[0].Cast(this, target);
+    }
+
+    public override void Defend(int damage)
+    {
+        Health -= damage;
+        RaiseOnDefend($"{Name} отримує {damage} урону. Здоров'я: {Health}");
+
+        if (!IsAlive())
+        {
+            RaiseOnDeath($"{Name} загинув.");
+        }
+    }
+}
+
+class WaterMage : Mage
+{
+    public WaterMage(string name, int magicLevel) : base(name, magicLevel)
+    {
+        Spells.Add(new WaterBlastSpell());
+    }
+
+    public override void Attack(Mage target)
+    {
+        RaiseOnAttack($"{Name} атакує {target.Name} використовуючи {Spells[0].Name}");
+        Spells[0].Cast(this, target);
+    }
+
+    public override void Defend(int damage)
+    {
+        Health -= damage;
+        RaiseOnDefend($"{Name} отримує {damage} урону. Здоров'я: {Health}");
+
+        if (!IsAlive())
+        {
+            RaiseOnDeath($"{Name} загинув.");
+        }
+    }
+}
+
+class FireballSpell : ISpell
+{
+    public string Name => "Вогняна куля";
+    public int Power => 20;
+
+    public void Cast(Mage caster, Mage target)
+    {
+        target.Defend(Power);
+    }
+}
+
+class WaterBlastSpell : ISpell
+{
+    public string Name => "Водний вибух";
+    public int Power => 15;
+
+    public void Cast(Mage caster, Mage target)
+    {
+        target.Defend(Power);
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Mage player1 = new FireMage("Гравець 1", 1);
+        Mage player2 = new WaterMage("Гравець 2", 1);
+
+        player1.OnAttack += (message) => Console.WriteLine(message);
+        player1.OnDefend += (message) => Console.WriteLine(message);
+        player1.OnDeath += (message) => Console.WriteLine(message);
+
+        player2.OnAttack += (message) => Console.WriteLine(message);
+        player2.OnDefend += (message) => Console.WriteLine(message);
+        player2.OnDeath += (message) => Console.WriteLine(message);
+
+        Random random = new Random();
+        while (player1.IsAlive() && player2.IsAlive())
+        {
+            if (random.Next(2) == 0)
+            {
+                player1.Attack(player2);
+            }
+            else
+            {
+                player2.Attack(player1);
+            }
+
+            Thread.Sleep(1000);
+
+            if (!player1.IsAlive())
+            {
+                Console.WriteLine($"{player2.Name} перемагає!");
+                break;
+            }
+
+            if (!player2.IsAlive())
+            {
+                Console.WriteLine($"{player1.Name} перемагає!");
+                break;
+            }
+        }
+    }
+}
