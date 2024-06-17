@@ -1,0 +1,65 @@
+using System;
+
+public class Point
+{
+    public int X { get; }
+    public int Y { get; }
+    public string Name { get; }
+
+    public Point(int x, int y, string name)
+    {
+        X = x;
+        Y = y;
+        Name = name;
+    }
+}
+
+public class Figure
+{
+    private Point[] points;
+
+    public Figure(params Point[] points)
+    {
+        this.points = points;
+    }
+
+    public double Length(Point A, Point B)
+    {
+        return Math.Sqrt(Math.Pow(B.X - A.X, 2) + Math.Pow(B.Y - A.Y, 2));
+    }
+
+    public void Perimeter()
+    {
+        double perimeter = 0;
+        for (int i = 0; i < points.Length; i++)
+        {
+            perimeter += Length(points[i], points[(i + 1) % points.Length]);
+        }
+        Console.WriteLine($"Perimeter: {perimeter}");
+    }
+}
+
+class Program
+{
+    static void Main()
+    {
+        Point[] points = new Point[3];
+        for (int i = 0; i < 3; i++)
+        {
+            Console.Write($"Enter name of point {i + 1}: ");
+            string name = Console.ReadLine();
+
+            Console.Write($"Enter x coordinate of point {i + 1}: ");
+            int x = int.Parse(Console.ReadLine());
+
+            Console.Write($"Enter y coordinate of point {i + 1}: ");
+            int y = int.Parse(Console.ReadLine());
+
+            points[i] = new Point(x, y, name);
+        }
+
+        Figure figure = new Figure(points);
+        Console.WriteLine("Figure: Triangle");
+        figure.Perimeter();
+    }
+}
